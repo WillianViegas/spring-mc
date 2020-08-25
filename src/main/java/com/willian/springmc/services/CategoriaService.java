@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.willian.springmc.domain.Categoria;
 import com.willian.springmc.repositories.CategoriaRepository;
+import com.willian.springmc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -22,6 +23,6 @@ public class CategoriaService {
 	
 	public Categoria findById(Integer id) {
 		Optional<Categoria> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(()-> new ObjectNotFoundException(id));
 	}
 }
