@@ -25,4 +25,14 @@ public class CategoriaService {
 		Optional<Categoria> obj = repository.findById(id);
 		return obj.orElseThrow(()-> new ObjectNotFoundException(id));
 	}
+	
+	public Categoria insert(Categoria obj) {
+		obj.setId(null);
+		return repository.save(obj);
+	}
+	
+	public Categoria update(Categoria obj) {
+		findById(obj.getId());
+		return repository.save(obj);
+	}
 }
