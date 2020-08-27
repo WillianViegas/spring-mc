@@ -13,6 +13,7 @@ import com.willian.springmc.domain.Cidade;
 import com.willian.springmc.domain.Cliente;
 import com.willian.springmc.domain.Endereco;
 import com.willian.springmc.domain.Estado;
+import com.willian.springmc.domain.ItemPedido;
 import com.willian.springmc.domain.Pagamento;
 import com.willian.springmc.domain.PagamentoComBoleto;
 import com.willian.springmc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.willian.springmc.repositories.CidadeRepository;
 import com.willian.springmc.repositories.ClienteRepository;
 import com.willian.springmc.repositories.EnderecoRepository;
 import com.willian.springmc.repositories.EstadoRepository;
+import com.willian.springmc.repositories.ItemPedidoRepository;
 import com.willian.springmc.repositories.PagamentoRepository;
 import com.willian.springmc.repositories.PedidoRepository;
 import com.willian.springmc.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class SpringMcApplication implements CommandLineRunner{
 	private PedidoRepository pedidoRepo;
 	@Autowired
 	private PagamentoRepository pagamentoRepo;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringMcApplication.class, args);
@@ -111,6 +115,19 @@ public class SpringMcApplication implements CommandLineRunner{
 		
 		pedidoRepo.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepo.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p2, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p3, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepo.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 
 }
