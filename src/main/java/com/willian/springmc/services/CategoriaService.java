@@ -38,10 +38,15 @@ public class CategoriaService {
 	}
 	
 	public Categoria update(Categoria obj) {
-		findById(obj.getId());
+		Categoria newObj = findById(obj.getId());
+		updateData(newObj, obj);
 		return repository.save(obj);
 	}
 	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+	}
+
 	public void deleteById(Integer id) {
 		findById(id);
 		
